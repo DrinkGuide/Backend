@@ -15,4 +15,6 @@ out/
 !**/src/test/**/out/
 
 .env
-application.yml
+
+src/main/resources/nginx-config/
+src/main/resources/application.yml

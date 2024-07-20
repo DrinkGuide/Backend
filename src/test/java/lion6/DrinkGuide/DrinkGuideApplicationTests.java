@@ -1,4 +1,4 @@
-package _lion.DrinkGuide;
+package lion6.DrinkGuide;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

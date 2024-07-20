@@ -1,0 +1,45 @@
+spring:
+  application: name=JWTBoard
+
+  datasource:
+    url: jdbc:mysql://drinkguide-mysql.cmeaiimyzhp4.ap-northeast-2.rds.amazonaws.com:3306/drinkguide?useSSL=false&serverTimezone=UTC
+    username: root
+    password: drinkguide
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jwt:
+    secret: nasjkfdnvdklarjeknfdvnlkafrglkaerwfnjrfdvjzhaefrbeaadsfadsfasdnjkfadfaaannarf
+    access-token:
+      expire-length: 1000000
+  jpa:
+    hibernate:
+      ddl-auto: create # create, none
+    properties:
+      hibernate:
+        #        show_sql: true
+        format_sql: true
+  #        default_batch_fetch_size: 1000
+
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        max-page-size: 2000
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-name: google
+            client-id: 839832865594-gigvtlc7aehosue0ctqn3ars0rd99maj.apps.googleusercontent.com
+            client-secret: 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
+            redirect-uri: http://localhost:8080/login/oauth2/code/google
+            authorization-grant-type: authorization_code
+            scope: profile, email
+
+
+
+logging.level:
+  org.hibernate.SQL: debug
+#  org.hibernate.type: trace

@@ -1,4 +1,4 @@
-package _lion.DrinkGuide;
+package lion6.DrinkGuide;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

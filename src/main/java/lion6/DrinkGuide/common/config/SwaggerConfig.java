@@ -19,7 +19,7 @@ public class SwaggerConfig {
         return new Info()
                 .title("DrinkGuide API Specification")
                 .description("API specification for the \"DrinkGuide\" Service.\n\n" +
-                        "Health Check - [https://www.drinkguide.store/api/v1/health](https://www.drinkguide.store/api/v1/health")
+                        "Health Check - [https://www.drinkguide.store/api/v1/health](https://www.drinkguide.store/api/v1/health)")
                 .version("1.0.0");
     }
 }

@@ -4,7 +4,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import lion6.DrinkGuide.api.Member.domain.Member;
 import lion6.DrinkGuide.api.Member.domain.RoleType;
 import lion6.DrinkGuide.common.oauth.CustomOAuth2User;
@@ -27,6 +26,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private static final String[] WHITELIST = {
             "/login",
+            // Actuator
+            "/actuator/health",
             "/api/v1/health",
             // Swagger URL
             "/swagger-resources/**",

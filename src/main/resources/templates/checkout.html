@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <title>토스페이먼츠 샘플 프로젝트</title>
+    <script src="https://js.tosspayments.com/v2/standard"></script>
+</head>
+<body>
+<div class="wrapper">
+    <div class="box_section">
+        <div id="payment-method"></div>
+        <div id="agreement"></div>
+        <div>
+            <label for="coupon-box">
+                <input id="coupon-box" type="checkbox"/>
+                5,000원 쿠폰 적용
+            </label>
+        </div>
+        <div>
+            <button id="payment-button">결제하기</button>
+        </div>
+    </div>
+</div>
+<script>
+    main();
+
+    async function main() {
+        const button = document.getElementById("payment-button");
+        const coupon = document.getElementById("coupon-box");
+        const amount = {
+            currency: "KRW",
+            value: 3000,
+        };
+        const clientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
+        const customerKey = generateRandomString();
+        const tossPayments = TossPayments(clientKey);
+        const widgets = tossPayments.widgets({
+            customerKey,
+        });
+
+        await widgets.setAmount(amount);
+
+        await widgets.renderPaymentMethods({
+            selector: "#payment-method",
+            variantKey: "DEFAULT",
+        });
+
+        await widgets.renderAgreement({ selector: "#agreement", variantKey: "AGREEMENT" });
+
+        coupon.addEventListener("change", async function () {
+            if (coupon.checked) {
+                await widgets.setAmount({
+                    currency: "KRW",
+                    value: amount.value - 5000,
+                });
+            } else {
+                await widgets.setAmount(amount);
+            }
+        });
+
+        button.addEventListener("click", async function () {
+            const orderId = generateRandomString();
+            await widgets.requestPayment({
+                orderId: orderId,
+                orderName: "토스 티셔츠 외 2건",
+                successUrl: window.location.origin + "/api/v1/payment/success", // 성공 시 리다이렉트할 URL
+                failUrl: window.location.origin + "/api/v1/payment/fail", // 실패 시 리다이렉트할 URL
+                customerEmail: "customer123@gmail.com",
+                customerName: "김토스",
+                customerMobilePhone: "01012341234",
+            });
+        });
+    }
+
+    function generateRandomString() {
+        return window.btoa(Math.random()).slice(0, 20);
+    }
+</script>
+</body>
+</html>

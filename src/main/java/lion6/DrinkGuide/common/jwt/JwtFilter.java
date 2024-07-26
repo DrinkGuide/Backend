@@ -40,7 +40,9 @@ public class JwtFilter extends OncePerRequestFilter {
             "/swagger-ui/swagger-ui.css",
             "/v3/api-docs",
             "/v3/api-docs/swagger-config",
-            "/v3/api-docs/**"
+            "/v3/api-docs/**",
+
+            "/api/v1/payment/**"
     };
 
     @Override

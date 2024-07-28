@@ -1,4 +1,4 @@
-package lion6.DrinkGuide.api.Member.domain;
+package lion6.DrinkGuide.api.member.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

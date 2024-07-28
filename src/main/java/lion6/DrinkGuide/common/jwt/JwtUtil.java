@@ -5,7 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import jakarta.servlet.http.HttpServletRequest;
-import lion6.DrinkGuide.api.Member.domain.RoleType;
+import lion6.DrinkGuide.api.member.domain.RoleType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Date;
 
 @Component
@@ -100,7 +101,12 @@ public class JwtUtil {
      * role 추출
      */
     public RoleType getRole(String token) {
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("role", RoleType.class);
+        String roleString = Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("role", String.class);
+        // 열거형에 해당하는 문자열을 찾아 반환하거나 기본값으로 USER를 반환합니다.
+        return Arrays.stream(RoleType.values())
+                .filter(roleType -> roleType.getKey().equals(roleString))
+                .findFirst()
+                .orElse(RoleType.USER);
     }
 
 }

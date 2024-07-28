@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <link rel="stylesheet" type="text/css" href="style.css"/>
-    <title>토스페이먼츠 샘플 프로젝트</title>
+    <title> 보이스 라밸 한달 구독권 결제 위젯 </title>
     <script src="https://js.tosspayments.com/v2/standard"></script>
 </head>
 <body>
@@ -23,6 +23,7 @@
     </div>
 </div>
 <script>
+    const memberId = [[${memberId}]];
     main();
 
     async function main() {
@@ -63,12 +64,10 @@
             const orderId = generateRandomString();
             await widgets.requestPayment({
                 orderId: orderId,
-                orderName: "토스 티셔츠 외 2건",
+                orderName: "Voice Label One Month Subscription",
                 successUrl: window.location.origin + "/api/v1/payment/success", // 성공 시 리다이렉트할 URL
                 failUrl: window.location.origin + "/api/v1/payment/fail", // 실패 시 리다이렉트할 URL
-                customerEmail: "customer123@gmail.com",
-                customerName: "김토스",
-                customerMobilePhone: "01012341234",
+                memberId: memberId,  // 유저 ID 포함
             });
         });
     }

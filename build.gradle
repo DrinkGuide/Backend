@@ -60,7 +60,7 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.12.3' // Jackson 포함
 	implementation 'com.auth0:java-jwt:4.4.0'
 
-	// Payment Payment
+	// payments payments
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'com.squareup.okhttp3:okhttp:4.9.3'
 }

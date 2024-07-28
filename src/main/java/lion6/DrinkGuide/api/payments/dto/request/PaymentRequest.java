@@ -1,4 +1,4 @@
-package lion6.DrinkGuide.api.Payment.dto.request;
+package lion6.DrinkGuide.api.payments.dto.request;
 
 
 import lombok.Getter;
@@ -9,4 +9,5 @@ public class PaymentRequest {
     private String paymentKey;
     private String orderId;
     private int amount;
+    private Long memberId;
 }

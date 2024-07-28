@@ -1,4 +1,4 @@
-package lion6.DrinkGuide.api.Member.domain;
+package lion6.DrinkGuide.api.member.domain;
 
 import jakarta.persistence.*;
 import lion6.DrinkGuide.common.config.auditing.entity.BaseTimeEntity;
@@ -7,8 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -19,16 +18,21 @@ public class Member extends BaseTimeEntity {
     private Long id;
 
     @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
     private String provider;
 
     @Column(nullable = false, name = "provider_id")
     private String providerId;
 
     @Column(nullable = false)
-    private String name;
+    private String email;
 
     @Column(nullable = false)
-    private String email;
+    private Boolean isSubscribe = false; // 기본값 false (구독X)
+
+    private LocalDateTime expirationDate;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -37,11 +41,8 @@ public class Member extends BaseTimeEntity {
     @Column(name = "refresh_token", length = 500) // refresh_token 속성의 최대 길이를 300으로 지정
     private String refreshToken;
 
-    @Column(nullable = true)
-    private String nickname;
-
-    @Column(nullable = true, name = "member_intro")
-    private String memberIntro;
+    @Column(name = "ui_type", nullable = false)
+    private Boolean UiType = false; // false: 어둡게, true: 밝게
 
     @Builder // OAuth2.0 로그인 시 자동 입력되는 정보
     private Member(String provider, String providerId, String name, String email, RoleType roleType){
@@ -51,13 +52,14 @@ public class Member extends BaseTimeEntity {
         this.email = email;
         this.roleType = roleType;
     }
-
-    // Setter를 쓰지않고 업데이트 메소드 활용
-    public void updateMemberProfile(String nickname, String memberIntro) {
-        this.nickname = nickname;
-        this.memberIntro = memberIntro;
+    public void subscribe() {
+        this.isSubscribe = true;
+        this.expirationDate = LocalDateTime.now().plusMonths(1);
     }
-    public void updateRefreshToken(String refreshToken) { this.refreshToken = refreshToken;}
+    public void updateUiType() { this.UiType = !this.UiType; }
+    public void updateRefreshToken(String refreshToken) {this.refreshToken = refreshToken;}
+
+
 
 }
 

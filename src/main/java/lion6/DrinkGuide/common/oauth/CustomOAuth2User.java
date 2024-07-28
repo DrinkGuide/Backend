@@ -1,6 +1,6 @@
 package lion6.DrinkGuide.common.oauth;
 
-import lion6.DrinkGuide.api.Member.domain.Member;
+import lion6.DrinkGuide.api.member.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -12,6 +12,7 @@ import java.util.Map;
 public class CustomOAuth2User implements OAuth2User {
     private final Member member;
     public Long getMemberId() { return member.getId(); }
+
     @Override
     public String getName() {
         return member.getName();

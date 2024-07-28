@@ -3,7 +3,7 @@ package lion6.DrinkGuide.common.oauth;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lion6.DrinkGuide.api.Member.service.MemberCommandService;
+import lion6.DrinkGuide.api.member.service.MemberCommandService;
 import lion6.DrinkGuide.common.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;

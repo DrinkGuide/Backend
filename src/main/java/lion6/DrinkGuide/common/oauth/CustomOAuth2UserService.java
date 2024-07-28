@@ -1,8 +1,8 @@
 package lion6.DrinkGuide.common.oauth;
 
-import lion6.DrinkGuide.api.Member.domain.Member;
-import lion6.DrinkGuide.api.Member.domain.RoleType;
-import lion6.DrinkGuide.api.Member.repository.MemberRepository;
+import lion6.DrinkGuide.api.member.domain.Member;
+import lion6.DrinkGuide.api.member.domain.RoleType;
+import lion6.DrinkGuide.api.member.repository.MemberRepository;
 import lion6.DrinkGuide.common.response.oauth.GoogleResponse;
 import lion6.DrinkGuide.common.response.oauth.OAuth2Response;
 import lombok.RequiredArgsConstructor;

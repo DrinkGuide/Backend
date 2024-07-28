@@ -4,8 +4,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lion6.DrinkGuide.api.Member.domain.Member;
-import lion6.DrinkGuide.api.Member.domain.RoleType;
+import lion6.DrinkGuide.api.member.domain.Member;
+import lion6.DrinkGuide.api.member.domain.RoleType;
 import lion6.DrinkGuide.common.oauth.CustomOAuth2User;
 import lion6.DrinkGuide.common.response.ErrorStatus;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +42,7 @@ public class JwtFilter extends OncePerRequestFilter {
             "/v3/api-docs/swagger-config",
             "/v3/api-docs/**",
 
-            "/api/v1/payment/**"
+//            "/api/v1/payment/**"
     };
 
     @Override

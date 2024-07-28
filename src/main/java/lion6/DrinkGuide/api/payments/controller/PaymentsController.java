@@ -1,34 +1,33 @@
-package lion6.DrinkGuide.api.Payment.controller;
-import lion6.DrinkGuide.api.Payment.dto.request.PaymentRequest;
+package lion6.DrinkGuide.api.payments.controller;
+import lion6.DrinkGuide.api.payments.dto.request.PaymentRequest;
+import lion6.DrinkGuide.common.util.MemberUtil;
 import okhttp3.*;
-import okhttp3.RequestBody;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/api/v1/payment")
-public class PaymentController {
+public class PaymentsController {
 
     private static final String SECRET_KEY = "test_gsk_docs_OaPz8L5KdmQXkzRz3y47BMw6";
 
+    /**
+     * 결제 위젯 렌더링 Thymleaf
+     */
     @GetMapping("/")
-    public String checkout() {
+    public String checkout(Principal principal, Model model) {
+        Long memberId = MemberUtil.getMemberId(principal);// 또는 필요한 다른 속성을 사용
+        model.addAttribute("memberId", memberId);
         return "checkout";
     }
 
-    @GetMapping("/success")
-    public String success() {
-        return "success";
-    }
-
-    @GetMapping("/fail")
-    public String fail() {
-        return "fail";
-    }
-
+    /**
+     * 결제 승인 API
+     */
     @PostMapping("/confirm")
     public String confirm(@org.springframework.web.bind.annotation.RequestBody PaymentRequest paymentRequest, Model model) {
         OkHttpClient client = new OkHttpClient();
@@ -37,7 +36,6 @@ public class PaymentController {
                 MediaType.parse("application/json"),
                 "{\"orderId\":\"" + paymentRequest.getOrderId() + "\",\"amount\":" + paymentRequest.getAmount() + ",\"paymentKey\":\"" + paymentRequest.getPaymentKey() + "\"}"
         );
-
         String encryptedSecretKey = "Basic " + java.util.Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes());
 
         Request request = new Request.Builder()
@@ -61,5 +59,21 @@ public class PaymentController {
             model.addAttribute("message", "오류가 발생했습니다.");
             return "fail";
         }
+    }
+
+    /**
+     * 성공 시 보낼 Thymleaf 페이지
+     */
+    @GetMapping("/success")
+    public String success() {
+        return "success";
+    }
+
+    /**
+     * 실패 시 보낼 Thymleaf 페이지
+     */
+    @GetMapping("/fail")
+    public String fail() {
+        return "fail";
     }
 }

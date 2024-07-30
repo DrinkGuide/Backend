@@ -51,12 +51,7 @@ public enum ErrorStatus {
      * 404 NOT_FOUND
      */
     NOT_FOUND_MEMBER("해당하는 유저가 없습니다."),
-    NOT_FOUND_REPORT("해당하는 보고서가 없습니다."),
-    NOT_FOUND_THREAD("해당하는 쓰레드가 없습니다."),
-    NOT_FOUND_CONTENT("해당하는 게시물이 없습니다."),
-    NOT_FOUND_COMMENT("해당하는 답글이 없습니다."),
-    NOT_FOUND_TRADE_HISTORY("해당하는 거래 내역이 없습니다."),
-    UNEXIST_COMMENT_LIKE("좋아요를 누르지 않은 답글입니다."),
+    NOT_FOUND_PAYMENTS_HISTORY("진행중인 결제 기록이 없습니다."),
 
 
     /**

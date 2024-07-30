@@ -1,6 +1,7 @@
 package lion6.DrinkGuide.api.member.domain;
 
 import jakarta.persistence.*;
+import lion6.DrinkGuide.api.payments.domain.PaymentsHistory;
 import lion6.DrinkGuide.common.config.auditing.entity.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -8,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -44,6 +47,9 @@ public class Member extends BaseTimeEntity {
     @Column(name = "ui_type", nullable = false)
     private Boolean UiType = false; // false: 어둡게, true: 밝게
 
+    @OneToMany(mappedBy = "member")
+    private List<PaymentsHistory> tradeHistories = new ArrayList<>();
+
     @Builder // OAuth2.0 로그인 시 자동 입력되는 정보
     private Member(String provider, String providerId, String name, String email, RoleType roleType){
         this.provider = provider;
@@ -54,7 +60,12 @@ public class Member extends BaseTimeEntity {
     }
     public void subscribe() {
         this.isSubscribe = true;
-        this.expirationDate = LocalDateTime.now().plusMonths(1);
+        this.expirationDate = LocalDateTime.now()
+                .plusMonths(1)
+                .withHour(23)
+                .withMinute(59)
+                .withSecond(59)
+                .withNano(0);
     }
     public void updateUiType() { this.UiType = !this.UiType; }
     public void updateRefreshToken(String refreshToken) {this.refreshToken = refreshToken;}

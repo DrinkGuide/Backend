@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public enum SuccessStatus {
     /**
-     * member
+     * Member
      */
     SIGNUP_SUCCESS(HttpStatus.CREATED, "회원가입 성공"),
     SIGNIN_SUCCESS(HttpStatus.OK, "로그인 성공"),
@@ -19,7 +19,13 @@ public enum SuccessStatus {
     UPDATE_UI_TYPE_SUCCESS(HttpStatus.OK, "UI Type 업데이트 성공"),
 
     /**
-     * contact
+     * (Toss) Payments History
+     */
+    INITIALIZE_PAYMENTS_SUCCESS(HttpStatus.CREATED, "토스 페이먼츠 초기화 성공"),
+    PAYMENTS_APPROVAL_SUCCESS(HttpStatus.OK, "토스 페이먼츠 결제 승인 성공"),
+
+    /**
+     * Contact
      */
     CREATE_CONTACT_SUCCESS(HttpStatus.CREATED, "문의 등록 성공")
     ;

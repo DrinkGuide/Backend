@@ -42,6 +42,16 @@ public class MemberController {
     }
 
     /**
+     * 맴버 정보 조회
+     */
+    @GetMapping
+    public ResponseEntity<ApiResponse<MemberSubscribeResponseDto>> getMember(Principal principal) {
+        Long memberId = MemberUtil.getMemberId(principal);
+        return ApiResponse.success(GET_IS_SUBSCRIBE_SUCCESS, memberQueryService.getIsSubscribe(memberId));
+    }
+
+
+    /**
      * UI Type 변경
      */
     @PatchMapping("/ui-type")

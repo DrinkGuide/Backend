@@ -1,4 +1,4 @@
-package lion6.DrinkGuide.api.record.domain;
+package lion6.DrinkGuide.api.purchase.domain;
 
 import jakarta.persistence.*;
 import lion6.DrinkGuide.api.member.domain.Member;

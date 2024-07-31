@@ -27,6 +27,7 @@ public enum SuccessStatus {
     /**
      * Contact
      */
+    GET_CONTACTS_SUCCESS(HttpStatus.OK, "문의 조회 성공"),
     CREATE_CONTACT_SUCCESS(HttpStatus.CREATED, "문의 등록 성공")
     ;
     private final HttpStatus httpStatus;

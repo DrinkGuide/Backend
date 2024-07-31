@@ -1,4 +1,6 @@
 package lion6.DrinkGuide.api.payments.controller;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lion6.DrinkGuide.api.payments.dto.request.PaymentsApproveRequestDto;
 import lion6.DrinkGuide.api.payments.dto.request.PaymentsInitializeRequestDto;
 import lion6.DrinkGuide.api.payments.service.PaymentsCommandService;
@@ -18,14 +20,16 @@ import static lion6.DrinkGuide.common.response.SuccessStatus.PAYMENTS_APPROVAL_S
 @RestController
 @RequestMapping("/api/v1/payments")
 @RequiredArgsConstructor
+@Tag(name="토스 페이먼츠 관련 컨트롤러",description = "토스 페이먼츠(테스트) 연동 시 쓰이는 컨트롤러입니다.")
 public class PaymentsController {
     private final PaymentsCommandService paymentsCommandService;
     /**
      * orderId와 customerName기반으로 결제 대기 정보 저장
      */
     @PostMapping
+    @Operation(summary = "토스 페이먼츠 결제 초기화",description = "토스 페이먼츠 결제 초기화를 진행합니다.(order_id 전달)")
     public ResponseEntity<ApiResponse<Object>> initializePayments(Principal principal, @RequestBody PaymentsInitializeRequestDto paymentInitializeRequestDto) {
-        Long memberId = MemberUtil.getMemberId(principal);// 또는 필요한 다른 속성을 사용
+        Long memberId = MemberUtil.getMemberId(principal);
         paymentsCommandService.initializePayments(memberId, paymentInitializeRequestDto);
         return ApiResponse.success(INITIALIZE_PAYMENTS_SUCCESS);
     }
@@ -34,40 +38,9 @@ public class PaymentsController {
      * 결제 승인 API
      */
     @PatchMapping("/approve")
+    @Operation(summary = "토스 페이먼츠 결제 승인 처리 및 구독",description = "결제가 완료된 후 결제 승인 처리를 진행하며 구독 처리가 됩니다.")
     public ResponseEntity<ApiResponse<Object>> approvePayments(@RequestBody PaymentsApproveRequestDto paymentsApproveRequestDto) throws IOException, InterruptedException {
-        System.out.println("-------------------------컨트롤러 실행됨-------------------------");
         paymentsCommandService.approvePayments(paymentsApproveRequestDto);
         return ApiResponse.success(PAYMENTS_APPROVAL_SUCCESS);
     }
 }
-
-
-//OkHttpClient client = new OkHttpClient();
-//
-//okhttp3.RequestBody body = okhttp3.RequestBody.create(
-//        MediaType.parse("application/json"),
-//        "{\"orderId\":\"" + paymentRequest.getOrderId() + "\",\"amount\":" + paymentRequest.getAmount() + ",\"paymentKey\":\"" + paymentRequest.getPaymentKey() + "\"}"
-//);
-//String encryptedSecretKey = "Basic " + java.util.Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes());
-//
-//Request request = new Request.Builder()
-//        .url("https://api.tosspayments.com/v1/payments/confirm")
-//        .post(body)
-//        .addHeader("Authorization", encryptedSecretKey)
-//        .addHeader("Content-Type", "application/json")
-//        .build();
-//
-//        try (Response response = client.newCall(request).execute()) {
-//        if (response.isSuccessful()) {
-//        System.out.println("response = " + response);
-//                model.addAttribute("message", "결제가 완료되었습니다.");
-//                return "success";
-//                        } else {
-//                        model.addAttribute("message", "결제에 실패했습니다.");
-//                return "fail";
-//                        }
-//                        } catch (IOException e) {
-//        e.printStackTrace();
-//            model.addAttribute("message", "오류가 발생했습니다.");
-//            return "fail";
-//                    }

@@ -1,5 +1,7 @@
 package lion6.DrinkGuide.api.contact.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lion6.DrinkGuide.api.contact.dto.request.ContactCreateRequestDto;
 import lion6.DrinkGuide.api.contact.dto.response.ContactGetAllResponseDto;
@@ -21,12 +23,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static lion6.DrinkGuide.common.response.SuccessStatus.CREATE_CONTACT_SUCCESS;
+import static lion6.DrinkGuide.common.response.SuccessStatus.GET_CONTACTS_SUCCESS;
 
 @RestController
 @RequestMapping("/api/v1/contacts")
 @RequiredArgsConstructor
+@Tag(name="문의(피드백) 관련 컨트롤러",description = "문의하기(피드백) 관련 컨트롤러입니다.")
 public class ContactController {
-    private final MemberQueryService memberQueryService;
     private final ContactCommandService contactCommandService;
     private final ContactQueryService contactQueryService;
 
@@ -34,6 +37,7 @@ public class ContactController {
      * 문의 등록
      */
     @PostMapping
+    @Operation(summary = "문의 사항 등록",description = "문의 사항을 등록합니다.")
     public ResponseEntity<ApiResponse<Object>> createContact(@Valid @RequestBody ContactCreateRequestDto contactCreateRequestDto, Principal principal) {
         Long memberId = MemberUtil.getMemberId(principal);
         contactCommandService.createContact(memberId, contactCreateRequestDto.title(), contactCreateRequestDto.content());
@@ -45,10 +49,10 @@ public class ContactController {
      * ResponseEntity<ApiResponse<List<ContactGetAllResponseDto>>>
      */
     @GetMapping
-    public void getContacts(Principal principal) {
-        MemberUtil.getMemberId(principal);
+    @Operation(summary = "문의 사항 조회",description = "문의 사항들을 조회합니다. ADMIN만 접근 가능합니다.")
+    public ResponseEntity<ApiResponse<List<ContactGetAllResponseDto>>> getContacts(Principal principal) {
+        Long memberId = MemberUtil.getMemberId(principal);
+        return ApiResponse.success(GET_CONTACTS_SUCCESS,contactQueryService.getContacts(memberId));
 
-//        contactQueryService.
-//                MemberUtil.getMemberId(principal)
     }
 }

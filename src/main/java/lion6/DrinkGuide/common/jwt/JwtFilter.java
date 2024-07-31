@@ -69,6 +69,7 @@ public class JwtFilter extends OncePerRequestFilter {
             Member jwtInfo = Member.builder()
                     .roleType(role)
                     .build();
+
             CustomOAuth2User customOAuth2User = new CustomOAuth2User(jwtInfo);
             Authentication authentication = new UsernamePasswordAuthenticationToken(memberId, null, customOAuth2User.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);

@@ -61,22 +61,8 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" -p "${{ secrets.DOCKERHUB_TOKEN }}"
-            
-            CONTAINER_NAME="backend"
-            
-            sudo docker stop $(sudo docker ps -q) || true
-            
-            sudo docker rm $(sudo docker ps -a -q) || true
-            
-            sudo docker rmi $(sudo docker images -q) || true
-            
+            cd /workspace
+            sudo docker-compose down
+            sudo docker rmi "${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:backend" || true
             sudo docker pull "${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:backend"
-            
-            sudo docker run -d \
-                --name "$CONTAINER_NAME" \
-                -p 80:8080 \
-                --log-driver=awslogs \
-                --log-opt awslogs-group=/fledge/backend \
-                --log-opt awslogs-region=ap-northeast-2 \
-                --log-opt awslogs-stream="$CONTAINER_NAME" \
-                "${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:backend"
+            sudo docker-compose up -d

@@ -33,8 +33,11 @@ public class PurchaseRecordQueryService {
         Member member = memberRepository.findMemberByIdOrThrow(memberId);
         List<Object[]> results = purchaseRecordRepository.countByProductTypeAndMember(member);
         List<PurchaseRecordCountResponseDto> purchaseRecordCountResponseDtos = new ArrayList<>();
+
         for (Object[] result : results) {
-            purchaseRecordCountResponseDtos.add(new PurchaseRecordCountResponseDto((String) result[0], (Long) result[1]));
+            ProductType productType = (ProductType) result[0]; // ProductType으로 캐스팅
+            Long count = (Long) result[1];
+            purchaseRecordCountResponseDtos.add(PurchaseRecordCountResponseDto.of(productType, count)); // ProductType을 사용
         }
         return purchaseRecordCountResponseDtos;
     }

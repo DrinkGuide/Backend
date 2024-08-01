@@ -63,12 +63,9 @@ jobs:
             docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" -p "${{ secrets.DOCKERHUB_TOKEN }}"
             
             CONTAINER_NAME="backend"
-            
             sudo docker stop $(sudo docker ps -q) || true
-            
             sudo docker rm $(sudo docker ps -a -q) || true
-            
-            sudo docker rmi $(sudo docker images -q) || true
+            sudo docker rmi "${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:backend" || true
             
             sudo docker pull "${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:backend"
             

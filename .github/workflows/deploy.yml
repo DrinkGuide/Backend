@@ -61,8 +61,18 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" -p "${{ secrets.DOCKERHUB_TOKEN }}"
-            cd /home/ubuntu/workspace
-            sudo docker-compose down
-            sudo docker rmi "${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:backend" || true
+            
+            CONTAINER_NAME="backend"
+            
+            sudo docker stop $(sudo docker ps -q) || true
+            
+            sudo docker rm $(sudo docker ps -a -q) || true
+            
+            sudo docker rmi $(sudo docker images -q) || true
+            
             sudo docker pull "${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:backend"
-            sudo docker-compose up -d
+            
+            sudo docker run -d \
+            --name "$CONTAINER_NAME" \
+            -p 80:8080 \
+            "${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:backend"

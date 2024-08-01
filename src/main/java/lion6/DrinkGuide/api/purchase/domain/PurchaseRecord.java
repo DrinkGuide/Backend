@@ -25,9 +25,13 @@ public class PurchaseRecord extends BaseTimeEntity {
 
     private String productName; // 제품이름
 
+
+    private ProductType productType;
+
     @Builder
-    public PurchaseRecord(Member member, String productName) {
+    public PurchaseRecord(Member member, String productName, String productType) {
         this.member = member;
         this.productName = productName;
+        this.productType = ProductType.valueOf(productType);
     }
 }

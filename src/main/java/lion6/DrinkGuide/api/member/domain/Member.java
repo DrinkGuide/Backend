@@ -32,7 +32,8 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false)
     private String email;
 
-    private LocalDateTime expirationDate;
+    private LocalDateTime expirationDate = LocalDateTime.now().plusDays(7); // 무료 체험 7일
+
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -43,7 +44,7 @@ public class Member extends BaseTimeEntity {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private SubscribeType subscribeType = SubscribeType.DRINK_SNACK; // 무료 체험 1주일
+    private SubscribeType subscribeType = SubscribeType.DRINK_SNACK; // 무료 체험 7일
 
     @Column(name = "ui_type", nullable = false)
     private Boolean UiType = false; // false: 어둡게, true: 밝게

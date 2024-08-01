@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 public class MemberQueryService {
     private final MemberRepository memberRepository;
 
-    public MemberSubscribeResponseDto getIsSubscribe(Long memberId) {
+    public MemberSubscribeResponseDto getSubscribeType(Long memberId) {
         Member member = memberRepository.findMemberByIdOrThrow(memberId);
-        return MemberSubscribeResponseDto.of(member.getIsSubscribe());
+        return MemberSubscribeResponseDto.of(member.getName(), member.getSubscribeType().getKey());
     }
 
 }

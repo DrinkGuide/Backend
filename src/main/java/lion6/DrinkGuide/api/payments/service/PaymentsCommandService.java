@@ -2,13 +2,13 @@ package lion6.DrinkGuide.api.payments.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lion6.DrinkGuide.api.member.domain.Member;
+import lion6.DrinkGuide.api.member.domain.SubscribeType;
 import lion6.DrinkGuide.api.member.repository.MemberRepository;
 import lion6.DrinkGuide.api.payments.domain.PaymentsHistory;
 import lion6.DrinkGuide.api.payments.dto.request.PaymentsApproveRequestDto;
 import lion6.DrinkGuide.api.payments.dto.request.PaymentsInitializeRequestDto;
 import lion6.DrinkGuide.api.payments.dto.response.PaymentsApproveApiResponseDto;
-import lion6.DrinkGuide.api.payments.dto.response.PaymentsApproveResponseDto;
-import lion6.DrinkGuide.api.payments.repository.PaymentsRepostory;
+import lion6.DrinkGuide.api.payments.repository.PaymentsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -27,17 +27,17 @@ import java.util.Base64;
 @RequiredArgsConstructor
 public class PaymentsCommandService {
     private final MemberRepository memberRepository;
-    private final PaymentsRepostory paymentsRepostory;
+    private final PaymentsRepository paymentsRepostory;
     @Value("${payments.toss.test-secret-key}")
     private String secretKey;
 
     public void initializePayments(Long memberId, PaymentsInitializeRequestDto paymentsInitializeRequestDto) {
-        System.out.println("memberId = " + memberId);
         Member member = memberRepository.findMemberByIdOrThrow(memberId);
-
         PaymentsHistory paymentsHistory = PaymentsHistory.builder()
                 .member(member)
                 .orderId(paymentsInitializeRequestDto.orderId())
+                .amount(paymentsInitializeRequestDto.amount())
+                .subscribeType(paymentsInitializeRequestDto.subscribeType())
                 .build();
         paymentsRepostory.save(paymentsHistory);
     }
@@ -45,15 +45,21 @@ public class PaymentsCommandService {
     public void approvePayments(PaymentsApproveRequestDto paymentsApproveRequestDto) throws IOException, InterruptedException {
         String beforeEncoding = secretKey + ":";
         String afterEnconding = Base64.getEncoder().encodeToString(beforeEncoding.getBytes(StandardCharsets.UTF_8));
-        System.out.println("afterEnconding = " + afterEnconding);
+
+        String orderId = paymentsApproveRequestDto.orderId();
+        int amount = paymentsApproveRequestDto.amount();
+        System.out.println("1차");
+        System.out.println("orderId = " + orderId);
+        System.out.println("amount = " + amount);
+        paymentsRepostory.findPaymentsHistoryByOrderIdAndAmountOrThrow(orderId, amount);
+        System.out.println("2차");
         // JSON 요청 본문을 생성
         String requestBody = String.format(
                 "{\"paymentKey\":\"%s\",\"orderId\":\"%s\",\"amount\":%d}",
                 paymentsApproveRequestDto.paymentKey(),
-                paymentsApproveRequestDto.orderId(),
-                paymentsApproveRequestDto.amount()
+                orderId,
+                amount
         );
-
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.tosspayments.com/v1/payments/confirm"))
                 .header("Authorization", "Basic " + afterEnconding)
@@ -66,7 +72,9 @@ public class PaymentsCommandService {
         ObjectMapper objectMapper = new ObjectMapper();
         PaymentsApproveApiResponseDto paymentsApproveApiResponseDto = objectMapper.readValue(response.body(), PaymentsApproveApiResponseDto.class);
         PaymentsHistory paymentsHistory = paymentsRepostory.findPaymentsHistoryByOrderIdOrThrow(paymentsApproveApiResponseDto.orderId());
-        paymentsHistory.approvePaymentsHistory(paymentsApproveApiResponseDto.paymentKey(), paymentsApproveRequestDto.amount());
-        paymentsHistory.getMember().subscribe();
+        paymentsHistory.approvePaymentsHistory(paymentsApproveApiResponseDto.paymentKey());
+
+        SubscribeType subscribeType = paymentsHistory.getSubscribeType();
+        paymentsHistory.getMember().subscribe(subscribeType);
     }
 }

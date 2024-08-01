@@ -10,12 +10,17 @@ import java.util.Optional;
 
 import static lion6.DrinkGuide.common.response.ErrorStatus.NOT_FOUND_PAYMENTS_HISTORY;
 
-public interface PaymentsRepostory extends JpaRepository<PaymentsHistory, Long> {
+public interface PaymentsRepository extends JpaRepository<PaymentsHistory, Long> {
 
     Optional<PaymentsHistory> findPaymentsHistoryByOrderId(String orderId);
-
     default PaymentsHistory findPaymentsHistoryByOrderIdOrThrow(String orderId) {
         return findPaymentsHistoryByOrderId(orderId)
+                .orElseThrow(() -> new NotFoundException(NOT_FOUND_PAYMENTS_HISTORY.getMessage()));
+    }
+
+    Optional<PaymentsHistory> findPaymentsHistoryByOrderIdAndAmount(String orderId, int amount);
+    default PaymentsHistory findPaymentsHistoryByOrderIdAndAmountOrThrow(String orderId, int amount) {
+        return findPaymentsHistoryByOrderIdAndAmount(orderId, amount)
                 .orElseThrow(() -> new NotFoundException(NOT_FOUND_PAYMENTS_HISTORY.getMessage()));
     }
 

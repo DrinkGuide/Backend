@@ -1,6 +1,8 @@
 package lion6.DrinkGuide.api.purchase.dto.request;
 
-public record PurchaseRecordCreateRequestDto(
+import java.time.LocalDateTime;
 
+public record PurchaseRecordCreateRequestDto(
+        String productName
 ) {
 }

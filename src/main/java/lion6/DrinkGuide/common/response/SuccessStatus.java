@@ -29,7 +29,13 @@ public enum SuccessStatus {
      * Contact
      */
     GET_CONTACTS_SUCCESS(HttpStatus.OK, "문의 조회 성공"),
-    CREATE_CONTACT_SUCCESS(HttpStatus.CREATED, "문의 등록 성공")
+    CREATE_CONTACT_SUCCESS(HttpStatus.CREATED, "문의 등록 성공"),
+
+    /**
+     * Purchase
+     */
+    CREATE_PURCHASE_SUCCESS(HttpStatus.CREATED, "구매 내역 저장 성공"),
+    GET_PURCHASES_SUCCESS(HttpStatus.OK, "구매 내역 조회 성공")
     ;
     private final HttpStatus httpStatus;
     private final String message;

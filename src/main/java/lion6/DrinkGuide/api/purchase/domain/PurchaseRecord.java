@@ -4,12 +4,16 @@ import jakarta.persistence.*;
 import lion6.DrinkGuide.api.member.domain.Member;
 import lion6.DrinkGuide.common.config.auditing.entity.BaseTimeEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Builder;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class PurchaseRecord extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +23,11 @@ public class PurchaseRecord extends BaseTimeEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    /**
-     * 어떤 음료 샀는지
-     */
+    private String productName; // 제품이름
+
+    @Builder
+    public PurchaseRecord(Member member, String productName) {
+        this.member = member;
+        this.productName = productName;
+    }
 }

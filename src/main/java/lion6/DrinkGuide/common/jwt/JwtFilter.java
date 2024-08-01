@@ -43,7 +43,8 @@ public class JwtFilter extends OncePerRequestFilter {
             "/v3/api-docs/**",
 
 //            "/api/v1/payments",
-            "/api/v1/payments/**"
+            "/api/v1/payments/**",
+            "/api/v1/purchases/**"
     };
 
     @Override

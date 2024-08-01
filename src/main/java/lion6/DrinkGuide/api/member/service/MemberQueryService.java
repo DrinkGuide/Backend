@@ -2,6 +2,7 @@ package lion6.DrinkGuide.api.member.service;
 
 import lion6.DrinkGuide.api.member.domain.Member;
 import lion6.DrinkGuide.api.member.dto.response.MemberGetResponseDto;
+import lion6.DrinkGuide.api.member.dto.response.MemberNotSubscribeGetResponseDto;
 import lion6.DrinkGuide.api.member.dto.response.MemberSubscribeGetResponseDto;
 import lion6.DrinkGuide.api.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class MemberQueryService {
 
     public MemberSubscribeGetResponseDto getMemberSubscribe(Long memberId) {
         Member member = memberRepository.findMemberByIdOrThrow(memberId);
-        return MemberSubscribeGetResponseDto.of(member.getSubscribeType(), member.getExpirationDate());
+        return MemberSubscribeGetResponseDto.of(member);
     }
 
 }

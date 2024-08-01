@@ -2,7 +2,7 @@ package lion6.DrinkGuide.api.member.service;
 
 import lion6.DrinkGuide.api.member.domain.Member;
 import lion6.DrinkGuide.api.member.domain.RoleType;
-import lion6.DrinkGuide.api.member.dto.response.TokenReissueResponseDto;
+import lion6.DrinkGuide.api.member.dto.response.TokenReissueUpdateResponseDto;
 import lion6.DrinkGuide.api.member.repository.MemberRepository;
 import lion6.DrinkGuide.common.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class MemberCommandService {
         memberRepository.save(member);
     }
 
-    public TokenReissueResponseDto reissueAccessToken(String refreshToken) {
+    public TokenReissueUpdateResponseDto reissueAccessToken(String refreshToken) {
         jwtUtil.validateToken(refreshToken);
         memberRepository.findMemberByRefreshTokenOrThrow(refreshToken);
 
@@ -31,7 +31,7 @@ public class MemberCommandService {
 
         String newAccessToken = jwtUtil.generateToken("access", memberIdRefresh, String.valueOf(roleRefresh), jwtUtil.accessTokenExpireLength);
 
-        return TokenReissueResponseDto.of(newAccessToken);
+        return TokenReissueUpdateResponseDto.of(newAccessToken);
     }
 
     public void updateUiType(Long memberId) {

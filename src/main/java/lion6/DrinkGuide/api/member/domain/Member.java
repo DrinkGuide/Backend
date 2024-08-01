@@ -49,7 +49,7 @@ public class Member extends BaseTimeEntity {
     private Boolean UiType = false; // false: 어둡게, true: 밝게
 
     @OneToMany(mappedBy = "member")
-    private List<PaymentsHistory> tradeHistories = new ArrayList<>();
+    private List<PaymentsHistory> paymentsHistories = new ArrayList<>();
 
     @Builder // OAuth2.0 로그인 시 자동 입력되는 정보
     private Member(String provider, String providerId, String name, String email, RoleType roleType){
@@ -70,8 +70,5 @@ public class Member extends BaseTimeEntity {
     }
     public void updateUiType() { this.UiType = !this.UiType; }
     public void updateRefreshToken(String refreshToken) {this.refreshToken = refreshToken;}
-
-
-
 }
 

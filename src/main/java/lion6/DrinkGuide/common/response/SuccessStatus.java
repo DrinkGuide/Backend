@@ -15,7 +15,8 @@ public enum SuccessStatus {
     SIGNIN_SUCCESS(HttpStatus.OK, "로그인 성공"),
     GET_NEW_TOKEN_SUCCESS(HttpStatus.OK,"토큰 재발급 성공"),
     WITHDRAWAL_SUCCESS(HttpStatus.OK,"유저 탈퇴 성공"),
-    GET_IS_SUBSCRIBE_SUCCESS(HttpStatus.OK, "구독 여부 조회 성공"),
+    GET_MEMBER_SUCCESS(HttpStatus.OK, "멤버 닉네임, 구독 정보 성공"),
+    GET_SUBSCRIBE_SUCCESS(HttpStatus.OK, "구독 현황 성공"),
     UPDATE_UI_TYPE_SUCCESS(HttpStatus.OK, "UI Type 업데이트 성공"),
 
     /**

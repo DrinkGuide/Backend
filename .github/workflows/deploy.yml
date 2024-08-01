@@ -4,7 +4,7 @@ name: CI/CD with Git Actions & Docker Hub
 on:
   push:
     branches:
-      - temp
+      - main
 #  pull_request:
 #    branches:
 #      - main

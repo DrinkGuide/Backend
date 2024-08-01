@@ -32,9 +32,6 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
-    private Boolean isSubscribe = false; // 기본값 false (구독X)
-
     private LocalDateTime expirationDate;
 
     @Column(nullable = false)
@@ -43,6 +40,10 @@ public class Member extends BaseTimeEntity {
 
     @Column(name = "refresh_token", length = 500) // refresh_token 속성의 최대 길이를 300으로 지정
     private String refreshToken;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private SubscribeType subscribeType = SubscribeType.DRINK_SNACK; // 무료 체험 1주일
 
     @Column(name = "ui_type", nullable = false)
     private Boolean UiType = false; // false: 어둡게, true: 밝게
@@ -58,8 +59,8 @@ public class Member extends BaseTimeEntity {
         this.email = email;
         this.roleType = roleType;
     }
-    public void subscribe() {
-        this.isSubscribe = true;
+    public void subscribe(SubscribeType subscribeType) {
+        this.subscribeType = subscribeType;
         this.expirationDate = LocalDateTime.now()
                 .plusMonths(1)
                 .withHour(23)

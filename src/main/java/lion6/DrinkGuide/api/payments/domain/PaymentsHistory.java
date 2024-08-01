@@ -2,6 +2,7 @@ package lion6.DrinkGuide.api.payments.domain;
 
 import jakarta.persistence.*;
 import lion6.DrinkGuide.api.member.domain.Member;
+import lion6.DrinkGuide.api.member.domain.SubscribeType;
 import lion6.DrinkGuide.common.config.auditing.entity.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -29,22 +30,27 @@ public class PaymentsHistory extends BaseTimeEntity {
     @Column(nullable = true)
     private String paymentKey;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private int amount;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private SubscribeType subscribeType;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus = PaymentStatus.PENDING;
 
     @Builder
-    public PaymentsHistory(Member member, String orderId) {
+    public PaymentsHistory(Member member, String orderId, int amount, String subscribeType) {
         this.member = member;
         this.orderId = orderId;
+        this.amount = amount;
+        this.subscribeType = SubscribeType.valueOf(subscribeType);
     }
 
-    public void approvePaymentsHistory(String paymentKey, int amount) {
+    public void approvePaymentsHistory(String paymentKey) {
         this.paymentKey = paymentKey;
-        this.amount = amount;
         this.paymentStatus = PaymentStatus.APPROVED;
     }
 }

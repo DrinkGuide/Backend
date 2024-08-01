@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 
 @RestController
-@RequestMapping("/api/v1/records")
+@RequestMapping("/api/v1/purchases")
 @RequiredArgsConstructor
 @Tag(name="구매 데이터 수집 컨트롤러",description = "스캔 기능을 통해 구매한 상품을 기록하고 관리하는 컨트롤러입니다.")
 public class PurchaseRecordController {

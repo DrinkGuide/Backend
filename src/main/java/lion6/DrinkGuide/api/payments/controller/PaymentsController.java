@@ -28,7 +28,10 @@ public class PaymentsController {
      */
     @PostMapping
     @Operation(summary = "토스 페이먼츠 결제 초기화",description = "토스 페이먼츠 결제 초기화를 진행합니다.(order_id 전달)")
-    public ResponseEntity<ApiResponse<Object>> initializePayments(Principal principal, @RequestBody PaymentsInitializeRequestDto paymentInitializeRequestDto) {
+    public ResponseEntity<ApiResponse<Object>> initializePayments(
+            Principal principal,
+            @RequestBody PaymentsInitializeRequestDto paymentInitializeRequestDto
+    ) {
         Long memberId = MemberUtil.getMemberId(principal);
         paymentsCommandService.initializePayments(memberId, paymentInitializeRequestDto);
         return ApiResponse.success(INITIALIZE_PAYMENTS_SUCCESS);
@@ -38,8 +41,10 @@ public class PaymentsController {
      * 결제 승인 API
      */
     @PatchMapping("/approve")
-    @Operation(summary = "토스 페이먼츠 결제 승인 처리 및 구독",description = "결제가 완료된 후 결제 승인 처리를 진행하며 구독 처리가 됩니다.")
-    public ResponseEntity<ApiResponse<Object>> approvePayments(@RequestBody PaymentsApproveRequestDto paymentsApproveRequestDto) throws IOException, InterruptedException {
+    @Operation(summary = "토스 페이먼츠 결제 승인 처리 및 구독", description = "결제가 완료된 후 결제 승인 처리를 진행하며 구독 처리가 됩니다.")
+    public ResponseEntity<ApiResponse<Object>> approvePayments(
+            @RequestBody PaymentsApproveRequestDto paymentsApproveRequestDto
+    ) throws IOException, InterruptedException {
         paymentsCommandService.approvePayments(paymentsApproveRequestDto);
         return ApiResponse.success(PAYMENTS_APPROVAL_SUCCESS);
     }

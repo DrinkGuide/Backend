@@ -28,7 +28,7 @@ public class PurchaseRecordController {
 
     // 구매 기록 저장
     @PostMapping // URL 결정
-    @Operation(summary = "구매 기록 저장", description = "새로운 구매 기록을 저장합니다.")
+    @Operation(summary = "구매 기록 저장", description = "새로운 구매 기록을 저장합니다. (DRINK/SNACK)")
     public ResponseEntity<ApiResponse<Object>> savePurchaseRecord(
             @RequestBody PurchaseRecordCreateRequestDto purchaseRecordCreateRequestDto,
             Principal principal
@@ -47,7 +47,7 @@ public class PurchaseRecordController {
     }
 
     @GetMapping("/{memberId}")
-    @Operation(summary = "이달 구매 인증 횟수 조회", description = "이달에 구매 인증 횟수를 조회합니다.")
+    @Operation(summary = "이달 구매 인증 횟수 조회", description = "이달에 구매 인증 횟수를 조회합니다. (Type별로)")
     public ResponseEntity<ApiResponse<List<PurchaseRecordCountResponseDto>>> getPurchaseCount(
             @PathVariable(value = "memberId") Long memberId
     ) {

@@ -23,9 +23,11 @@ public class PurchaseRecord extends BaseTimeEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @Column(nullable = false)
     private String productName; // 제품이름
 
-
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private ProductType productType;
 
     @Builder

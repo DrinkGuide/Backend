@@ -20,14 +20,11 @@ import static lion6.DrinkGuide.common.response.SuccessStatus.PAYMENTS_APPROVAL_S
 @RestController
 @RequestMapping("/api/v1/payments")
 @RequiredArgsConstructor
-@Tag(name="토스 페이먼츠 관련 컨트롤러",description = "토스 페이먼츠(테스트) 연동 시 쓰이는 컨트롤러입니다.")
+@Tag(name="토스 페이먼츠 관련 컨트롤러",description = " 토스 페이먼츠 API 연동 시 쓰이는 컨트롤러입니다.")
 public class PaymentsController {
     private final PaymentsCommandService paymentsCommandService;
-    /**
-     * orderId와 customerName기반으로 결제 대기 정보 저장
-     */
     @PostMapping
-    @Operation(summary = "토스 페이먼츠 결제 초기화",description = "토스 페이먼츠 결제 초기화를 진행합니다.(order_id 전달)")
+    @Operation(summary = "토스 페이먼츠 결제 초기화",description = "(subscribing state) 토스 페이먼츠 결제 초기화를 진행합니다.(order_id, amount, subscribeType 전달)")
     public ResponseEntity<ApiResponse<Object>> initializePayments(
             Principal principal,
             @RequestBody PaymentsInitializeRequestDto paymentInitializeRequestDto
@@ -37,9 +34,6 @@ public class PaymentsController {
         return ApiResponse.success(INITIALIZE_PAYMENTS_SUCCESS);
     }
 
-    /**
-     * 결제 승인 API
-     */
     @PatchMapping("/approve")
     @Operation(summary = "토스 페이먼츠 결제 승인 처리 및 구독", description = "결제가 완료된 후 결제 승인 처리를 진행하며 구독 처리가 됩니다.")
     public ResponseEntity<ApiResponse<Object>> approvePayments(

@@ -34,21 +34,21 @@ public class MemberController {
         return ApiResponse.success(GET_NEW_TOKEN_SUCCESS, newAccessToken);
     }
     @GetMapping
-    @Operation(summary = "닉네임 및 구독 정보 조회", description = "<my page> 닉네임 및 구독여부를 조회합니다. 엑세스 토큰이 필요합니다.")
+    @Operation(summary = "닉네임 및 구독 정보 조회", description = "(my page) 닉네임 및 구독여부를 조회합니다. 엑세스 토큰이 필요합니다.")
     public ResponseEntity<ApiResponse<MemberGetResponseDto>> getMemberInfo(Principal principal) {
         Long memberId = MemberUtil.getMemberId(principal);
         return ApiResponse.success(GET_MEMBER_SUCCESS, memberQueryService.getMemberInfo(memberId));
     }
 
     @GetMapping("/subscribe")
-    @Operation(summary = "구독 현황 조회", description = "<subscribing state> 구독 타입, 구독 만료 일자 반환")
+    @Operation(summary = "구독 현황 조회", description = "(subscribing state) 구독 타입, 구독 만료 일자 반환")
     public ResponseEntity<ApiResponse<MemberSubscribeGetResponseDto>> getMemberSubscribe(Principal principal) {
         Long memberId = MemberUtil.getMemberId(principal);
         return ApiResponse.success(GET_SUBSCRIBE_SUCCESS, memberQueryService.getMemberSubscribe(memberId));
     }
 
     @PatchMapping("/ui-type")
-    @Operation(summary = "UI 타입 변환", description = "어둡게/밝게 UI 타입을 변환합니다. 엑세스 토큰이 필요합니다.")
+    @Operation(summary = "UI 타입 변환", description = "(main) 어둡게/밝게 UI 타입을 변환합니다. 엑세스 토큰이 필요합니다. - 삭제")
     public ResponseEntity<ApiResponse<Object>> updateUiType(Principal principal) {
         Long memberId = MemberUtil.getMemberId(principal);
         memberCommandService.updateUiType(memberId);

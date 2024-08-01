@@ -20,15 +20,11 @@ public class Contact extends BaseTimeEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @Column(length = 500, nullable = false)
-    private String title;
-
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
     @Builder
-    public Contact(String title, String content, Member member) {
-        this.title = title;
+    public Contact(String content, Member member) {
         this.content = content;
         this.member = member;
     }

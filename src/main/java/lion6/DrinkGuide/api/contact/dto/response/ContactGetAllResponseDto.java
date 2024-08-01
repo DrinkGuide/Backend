@@ -3,8 +3,6 @@ package lion6.DrinkGuide.api.contact.dto.response;
 import lion6.DrinkGuide.api.contact.domain.Contact;
 import lion6.DrinkGuide.common.util.TimeUtil;
 
-import java.time.LocalDateTime;
-
 public record ContactGetAllResponseDto(
         String email,
         String content,

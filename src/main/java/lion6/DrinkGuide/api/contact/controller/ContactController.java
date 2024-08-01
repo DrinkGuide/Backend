@@ -7,20 +7,14 @@ import lion6.DrinkGuide.api.contact.dto.request.ContactCreateRequestDto;
 import lion6.DrinkGuide.api.contact.dto.response.ContactGetAllResponseDto;
 import lion6.DrinkGuide.api.contact.service.ContactCommandService;
 import lion6.DrinkGuide.api.contact.service.ContactQueryService;
-import lion6.DrinkGuide.api.member.service.MemberQueryService;
-import lion6.DrinkGuide.common.oauth.CustomOAuth2User;
 import lion6.DrinkGuide.common.response.ApiResponse;
-import lion6.DrinkGuide.common.response.SuccessStatus;
 import lion6.DrinkGuide.common.util.MemberUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static lion6.DrinkGuide.common.response.SuccessStatus.CREATE_CONTACT_SUCCESS;
 import static lion6.DrinkGuide.common.response.SuccessStatus.GET_CONTACTS_SUCCESS;
@@ -40,7 +34,7 @@ public class ContactController {
     @Operation(summary = "문의 사항 등록",description = "문의 사항을 등록합니다.")
     public ResponseEntity<ApiResponse<Object>> createContact(@Valid @RequestBody ContactCreateRequestDto contactCreateRequestDto, Principal principal) {
         Long memberId = MemberUtil.getMemberId(principal);
-        contactCommandService.createContact(memberId, contactCreateRequestDto.title(), contactCreateRequestDto.content());
+        contactCommandService.createContact(memberId, contactCreateRequestDto);
         return ApiResponse.success(CREATE_CONTACT_SUCCESS);
     }
 

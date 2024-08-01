@@ -43,8 +43,6 @@ public class PaymentsCommandService {
     }
 
     public void approvePayments(PaymentsApproveRequestDto paymentsApproveRequestDto) throws IOException, InterruptedException {
-        System.out.println("-------------------------서비스 실행됨-------------------------");
-
         String beforeEncoding = secretKey + ":";
         String afterEnconding = Base64.getEncoder().encodeToString(beforeEncoding.getBytes(StandardCharsets.UTF_8));
         System.out.println("afterEnconding = " + afterEnconding);
@@ -62,7 +60,7 @@ public class PaymentsCommandService {
                 .header("Content-Type", "application/json")
                 .method("POST", HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
-        System.out.println("-------------------------API 요청 실행됨-------------------------");
+
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 
         ObjectMapper objectMapper = new ObjectMapper();

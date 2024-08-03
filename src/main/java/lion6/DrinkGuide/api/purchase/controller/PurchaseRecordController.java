@@ -48,7 +48,7 @@ public class PurchaseRecordController {
 
     @GetMapping("/{memberId}")
     @Operation(summary = "이달 구매 인증 횟수 조회", description = "이달에 구매 인증 횟수를 조회합니다. (Type별로)")
-    public ResponseEntity<ApiResponse<List<PurchaseRecordCountResponseDto>>> getPurchaseCount(
+    public ResponseEntity<ApiResponse<List<String>>> getPurchaseCount(
             @PathVariable(value = "memberId") Long memberId
     ) {
         return ApiResponse.success(GET_CONTACTS_SUCCESS, purchaseRecordQueryService.getPurchaseCount(memberId));

@@ -29,16 +29,10 @@ public class PurchaseRecordQueryService {
                 .collect(Collectors.toList());
     }
 
-    public List<PurchaseRecordCountResponseDto> getPurchaseCount(Long memberId) {
-        Member member = memberRepository.findMemberByIdOrThrow(memberId);
-        List<Object[]> results = purchaseRecordRepository.countByProductTypeAndMember(member);
-        List<PurchaseRecordCountResponseDto> purchaseRecordCountResponseDtos = new ArrayList<>();
-
-        for (Object[] result : results) {
-            ProductType productType = (ProductType) result[0]; // ProductType으로 캐스팅
-            Long count = (Long) result[1];
-            purchaseRecordCountResponseDtos.add(PurchaseRecordCountResponseDto.of(productType, count)); // ProductType을 사용
-        }
-        return purchaseRecordCountResponseDtos;
+    public List<String> getPurchaseCount(Long memberId) {
+        List<ProductType> productTypes = purchaseRecordRepository.findRecentProductTypesByMemberId(memberId);
+        return productTypes.stream()
+                .map(productType -> String.valueOf(productType))
+                .collect(Collectors.toList());
     }
 }

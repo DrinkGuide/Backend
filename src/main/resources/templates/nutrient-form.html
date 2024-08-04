@@ -1,0 +1,13 @@
+<form th:action="@{/api/v1/nutrients}" method="post">
+    <div>
+        <label for="productName">Product Name:</label>
+        <input type="text" id="productName" name="productName" required />
+    </div>
+    <div>
+        <label for="nutrientInfo">Nutrient Info:</label>
+        <input type="text" id="nutrientInfo" name="nutrientInfo" required />
+    </div>
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+</form>

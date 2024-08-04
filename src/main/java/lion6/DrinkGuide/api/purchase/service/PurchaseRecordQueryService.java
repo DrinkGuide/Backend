@@ -2,6 +2,8 @@ package lion6.DrinkGuide.api.purchase.service;
 
 import lion6.DrinkGuide.api.member.domain.Member;
 import lion6.DrinkGuide.api.member.repository.MemberRepository;
+import lion6.DrinkGuide.api.nutrient.domain.Product;
+import lion6.DrinkGuide.api.nutrient.repository.NutrientRepository;
 import lion6.DrinkGuide.api.purchase.domain.ProductType;
 import lion6.DrinkGuide.api.purchase.domain.PurchaseRecord;
 import lion6.DrinkGuide.api.purchase.dto.response.PurchaseRecordCountResponseDto;
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
 public class PurchaseRecordQueryService {
     private final PurchaseRecordRepository purchaseRecordRepository;
     private final MemberRepository memberRepository;
+    private final NutrientRepository nutrientRepository;
     public List<PurchaseRecordGetResponseDto> getAllPurchaseRecords(Long memberId) {
         Member member = memberRepository.findMemberByIdOrThrow(memberId);
         List<PurchaseRecord> purchaseRecords = purchaseRecordRepository.findAllByMemberOrderByCreatedDate(member);
@@ -34,5 +37,10 @@ public class PurchaseRecordQueryService {
         return productTypes.stream()
                 .map(productType -> String.valueOf(productType))
                 .collect(Collectors.toList());
+    }
+
+    public String getNutrientInfo(String productName) {
+        Product product = nutrientRepository.findProductByProductNameOrThrow(productName);
+        return product.getNutrientInfo();
     }
 }

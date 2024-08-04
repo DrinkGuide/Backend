@@ -2,6 +2,7 @@ package lion6.DrinkGuide.api.purchase.domain;
 
 import jakarta.persistence.*;
 import lion6.DrinkGuide.api.member.domain.Member;
+import lion6.DrinkGuide.api.nutrient.domain.Product;
 import lion6.DrinkGuide.common.config.auditing.entity.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -23,6 +24,10 @@ public class PurchaseRecord extends BaseTimeEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private Product product;
+
     @Column(nullable = false)
     private String productName; // 제품이름
 
@@ -31,8 +36,9 @@ public class PurchaseRecord extends BaseTimeEntity {
     private ProductType productType;
 
     @Builder
-    public PurchaseRecord(Member member, String productName, String productType) {
+    public PurchaseRecord(Member member, Product product, String productName, String productType) {
         this.member = member;
+        this.product = product;
         this.productName = productName;
         this.productType = ProductType.valueOf(productType);
     }

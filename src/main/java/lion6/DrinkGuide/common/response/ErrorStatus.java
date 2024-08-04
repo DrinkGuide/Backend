@@ -52,6 +52,7 @@ public enum ErrorStatus {
      */
     NOT_FOUND_MEMBER("해당하는 유저가 없습니다."),
     NOT_FOUND_PAYMENTS_HISTORY("진행중인 결제 기록이 없습니다."),
+    NOT_FOUND_PRODUCT("해당하는 제품이 없습니다."),
 
 
     /**

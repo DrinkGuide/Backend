@@ -3,7 +3,6 @@ package lion6.DrinkGuide.api.purchase.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lion6.DrinkGuide.api.purchase.dto.request.PurchaseRecordCreateRequestDto;
-import lion6.DrinkGuide.api.purchase.dto.response.PurchaseRecordCountResponseDto;
 import lion6.DrinkGuide.api.purchase.dto.response.PurchaseRecordGetResponseDto;
 import lion6.DrinkGuide.api.purchase.service.PurchaseRecordCommandService;
 import lion6.DrinkGuide.api.purchase.service.PurchaseRecordQueryService;
@@ -54,4 +53,9 @@ public class PurchaseRecordController {
         return ApiResponse.success(GET_CONTACTS_SUCCESS, purchaseRecordQueryService.getPurchaseCount(memberId));
     }
 
+    @GetMapping("/nutrient-info")
+    @Operation(summary = "영양 정보 조회", description = "구매 내역 클릭 시 영양 정보를 반환합니다.")
+    public ResponseEntity<ApiResponse<String>> getNutrient(@RequestParam(value = "productName") String productName) {
+        return ApiResponse.success(GET_NUTRIENT_INFO_SUCCESS, purchaseRecordQueryService.getNutrientInfo(productName));
+    }
 }

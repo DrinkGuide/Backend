@@ -10,6 +10,8 @@ import lion6.DrinkGuide.api.purchase.dto.response.PurchaseRecordCountResponseDto
 import lion6.DrinkGuide.api.purchase.dto.response.PurchaseRecordGetResponseDto;
 import lion6.DrinkGuide.api.purchase.repository.PurchaseRecordRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +35,8 @@ public class PurchaseRecordQueryService {
     }
 
     public List<String> getPurchaseCount(Long memberId) {
-        List<ProductType> productTypes = purchaseRecordRepository.findRecentProductTypesByMemberId(memberId);
+        Pageable pageable = PageRequest.of(0, 10); // Page 0, Size 10
+        List<ProductType> productTypes = purchaseRecordRepository.findRecentProductTypesByMemberId(memberId, pageable);
         return productTypes.stream()
                 .map(productType -> String.valueOf(productType))
                 .collect(Collectors.toList());

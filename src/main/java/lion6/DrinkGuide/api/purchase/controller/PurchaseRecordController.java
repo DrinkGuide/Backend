@@ -25,9 +25,7 @@ import static lion6.DrinkGuide.common.response.SuccessStatus.*;
 public class PurchaseRecordController {
     private final PurchaseRecordCommandService purchaseRecordCommandService;
     private final PurchaseRecordQueryService purchaseRecordQueryService;
-
-    // 구매 기록 저장
-    @PostMapping // URL 결정
+    @PostMapping
     @Operation(summary = "구매 기록 저장", description = "새로운 구매 기록을 저장합니다. (DRINK/SNACK)")
     public ResponseEntity<ApiResponse<Object>> savePurchaseRecord(
             @RequestBody PurchaseRecordCreateRequestDto purchaseRecordCreateRequestDto,
@@ -37,15 +35,12 @@ public class PurchaseRecordController {
         purchaseRecordCommandService.savePurchaseRecord(memberId, purchaseRecordCreateRequestDto);
         return ApiResponse.success(CREATE_PURCHASE_SUCCESS);
     }
-
-    // 전체 구매 내역 조회
     @GetMapping
     @Operation(summary = "전체 구매 내역 조회", description = "전체 구매 기록을 조회합니다.")
     public ResponseEntity<ApiResponse<List<PurchaseRecordGetResponseDto>>> getAllPurchaseRecords(Principal principal) {
         Long memberId = MemberUtil.getMemberId(principal);
         return ApiResponse.success(GET_PURCHASES_SUCCESS, purchaseRecordQueryService.getAllPurchaseRecords(memberId));
     }
-
     @GetMapping("/{memberId}")
     @Operation(summary = "이달 구매 인증 횟수 조회", description = "이달에 구매 인증 횟수를 조회합니다. (Type별로)")
     public ResponseEntity<ApiResponse<List<String>>> getPurchaseCount(
@@ -53,5 +48,4 @@ public class PurchaseRecordController {
     ) {
         return ApiResponse.success(GET_CONTACTS_SUCCESS, purchaseRecordQueryService.getPurchaseCount(memberId));
     }
-
 }

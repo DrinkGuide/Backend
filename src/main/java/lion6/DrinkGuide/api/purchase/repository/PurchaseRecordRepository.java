@@ -14,9 +14,9 @@ public interface PurchaseRecordRepository extends JpaRepository<PurchaseRecord, 
     List<PurchaseRecord> findAllByMemberOrderByCreatedDate(Member member);
 
     @Query(value = "SELECT pr.productType FROM PurchaseRecord pr " +
-            "WHERE MONTH(pr.createdDate) = MONTH(NOW()) " + // 필드 이름 확인
+            "WHERE MONTH(pr.createdDate) = MONTH(NOW()) " +
             "AND YEAR(pr.createdDate) = YEAR(NOW()) " +
-            "AND pr.member.id = :memberId " + // member_id 조건 수정
+            "AND pr.member.id = :memberId " +
             "ORDER BY pr.createdDate DESC")
     List<ProductType> findRecentProductTypesByMemberId(@Param("memberId") Long memberId);
 

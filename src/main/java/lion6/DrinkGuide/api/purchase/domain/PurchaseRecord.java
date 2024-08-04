@@ -24,7 +24,7 @@ public class PurchaseRecord extends BaseTimeEntity {
     private Member member;
 
     @Column(nullable = false)
-    private String productName; // 제품이름
+    private String productName;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

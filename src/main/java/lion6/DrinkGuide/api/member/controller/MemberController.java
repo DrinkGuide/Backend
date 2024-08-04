@@ -26,7 +26,6 @@ import static lion6.DrinkGuide.common.response.SuccessStatus.*;
 public class MemberController {
     private final MemberCommandService memberCommandService;
     private final MemberQueryService memberQueryService;
-
     @PostMapping("/reissue")
     @Operation(summary = "엑세스 토큰 재발급", description = "엑세스 토큰 만료 시 리프레쉬 토큰을 통한 엑세스 토큰 재발급합니다.")
     public ResponseEntity<ApiResponse<TokenReissueUpdateResponseDto>> reissueAccessToken(@Valid @RequestBody TokenReissueRequestDto tokenReissueRequestDto) {
@@ -39,14 +38,12 @@ public class MemberController {
         Long memberId = MemberUtil.getMemberId(principal);
         return ApiResponse.success(GET_MEMBER_SUCCESS, memberQueryService.getMemberInfo(memberId));
     }
-
     @GetMapping("/subscribe")
     @Operation(summary = "구독 현황 조회", description = "(subscribing state) 구독 타입, 구독 만료 일자 반환 \n NONE(구독X) / DRINK(음료) / DRINK_SNACK(음료+과자)")
     public ResponseEntity<ApiResponse<MemberSubscribeGetResponseDto>> getMemberSubscribe(Principal principal) {
         Long memberId = MemberUtil.getMemberId(principal);
         return ApiResponse.success(GET_SUBSCRIBE_SUCCESS, memberQueryService.getMemberSubscribe(memberId));
     }
-
     @PatchMapping("/ui-type")
     @Operation(summary = "UI 타입 변환", description = "(main) 어둡게/밝게 UI 타입을 변환합니다. 엑세스 토큰이 필요합니다. - 삭제")
     public ResponseEntity<ApiResponse<Object>> updateUiType(Principal principal) {
@@ -54,5 +51,4 @@ public class MemberController {
         memberCommandService.updateUiType(memberId);
         return ApiResponse.success(UPDATE_UI_TYPE_SUCCESS);
     }
-
 }

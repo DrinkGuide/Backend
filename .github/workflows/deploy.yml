@@ -69,6 +69,9 @@ jobs:
             
             sudo docker pull "${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:backend"
             
+            cd workspace
+            
+            sudo docker-compose up -d
 #            sudo docker run -d \
 #            --name "$CONTAINER_NAME" \
 #            -p 80:8080 \

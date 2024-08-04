@@ -44,7 +44,9 @@ public class JwtFilter extends OncePerRequestFilter {
 
 //            "/api/v1/payments",
             "/api/v1/payments/**",
-            "/api/v1/purchases/**"
+            "/api/v1/purchases/**",
+            "/api/v1/nutrients",
+            "/api/v1/nutrients/**",
     };
 
     @Override

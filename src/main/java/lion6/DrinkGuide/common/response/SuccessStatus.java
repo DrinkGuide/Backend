@@ -36,7 +36,8 @@ public enum SuccessStatus {
      */
     CREATE_PURCHASE_SUCCESS(HttpStatus.CREATED, "구매 인증 저장 성공"),
     GET_PURCHASES_SUCCESS(HttpStatus.OK, "구매 인증 조회 성공"),
-    GET_COUNT_PURCHASE_SUCCESS(HttpStatus.OK, "구매 인증 횟수 조회 성공")
+    GET_COUNT_PURCHASE_SUCCESS(HttpStatus.OK, "구매 인증 횟수 조회 성공"),
+    GET_NUTRIENT_INFO_SUCCESS(HttpStatus.OK, "제품의 영양성분 조회 성공")
     ;
     private final HttpStatus httpStatus;
     private final String message;
